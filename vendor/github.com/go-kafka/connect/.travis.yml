@@ -1,0 +1,24 @@
+language: go
+go:
+  - 1.5
+  - 1.6
+  - tip
+
+env:
+  global:
+    - GO15VENDOREXPERIMENT=1
+
+install:
+  - make get-devtools
+  - export PATH=$PATH:$HOME/gopath/bin
+
+script:
+  - make lint coverage
+
+after_success:
+  - |
+    bash <(curl -s https://codecov.io/bash) -f connect.coverprofile || \
+        echo "Codecov did not collect coverage reports"
+
+# Container-based infra for builds that start faster.
+sudo: false
