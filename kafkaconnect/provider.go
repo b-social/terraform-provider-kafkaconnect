@@ -18,7 +18,7 @@ func Provider() *schema.Provider {
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
-			"kafka_connect_connector": newConnector(),
+			"kafkaconnect_connector": newConnector(),
 		},
 		ConfigureFunc: configure,
 	}
