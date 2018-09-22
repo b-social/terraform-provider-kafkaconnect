@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/b-social/terraform-provider-kafka-connect/kafkaconnect"
+	"github.com/b-social/terraform-provider-kafkaconnect/kafkaconnect"
 	"github.com/hashicorp/terraform/plugin"
 	"github.com/hashicorp/terraform/terraform"
 )
