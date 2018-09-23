@@ -1,10 +1,10 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 [ -n "$DEBUG" ] && set -x
 set -e
 set -o pipefail
 
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SCRIPT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
 
 ${SCRIPT_DIR}/install-bash.sh
 ${SCRIPT_DIR}/install-build-tools.sh
