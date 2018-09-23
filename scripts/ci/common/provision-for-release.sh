@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 [ -n "$DEBUG" ] && set -x
 set -e
