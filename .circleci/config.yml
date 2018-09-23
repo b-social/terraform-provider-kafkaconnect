@@ -6,7 +6,7 @@ jobs:
     - image: golang:1.11-alpine
     steps:
     - run:
-        command: apk add --no-cache git
+        command: apk add --no-cache git openssh-client
     - checkout
     - run: ./scripts/ci/common/install-ruby.sh
     - run: ./scripts/ci/steps/test.sh
@@ -16,7 +16,7 @@ jobs:
     - image: golang:1.11-alpine
     steps:
     - run:
-        command: apk add --no-cache git
+        command: apk add --no-cache git openssh-client
     - checkout
     - run: ./scripts/ci/common/install-ruby.sh
     - run: ./scripts/ci/common/configure-git.sh
@@ -27,7 +27,7 @@ jobs:
     - image: golang:1.11-alpine
     steps:
     - run:
-        command: apk add --no-cache git
+        command: apk add --no-cache git openssh-client
     - checkout
     - run: ./scripts/ci/common/install-ruby.sh
     - run: ./scripts/ci/common/configure-git.sh
