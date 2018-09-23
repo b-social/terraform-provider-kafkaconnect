@@ -11,5 +11,5 @@ PROJECT_DIR="$( cd "$SCRIPT_DIR/../../.." && pwd )"
 
 cd "$PROJECT_DIR"
 
-./go version:bump[rc]
-./go release
+./build version:bump[rc]
+./build release
