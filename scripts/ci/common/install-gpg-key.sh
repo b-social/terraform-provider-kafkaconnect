@@ -4,14 +4,13 @@
 set -e
 set -o pipefail
 
-export TERM=xterm
-
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PROJECT_DIR="$( cd "$SCRIPT_DIR/../../.." && pwd )"
 
 cd "$PROJECT_DIR"
 
-git crypt unlock
-
-./build version:bump[rc]
-./build release
+set +e
+openssl aes-256-cbc \
+    -d \
+    -in ./.circleci/gpg.private.enc -k "${ENCRYPTION_PASSPHRASE}" | gpg --import -
+set -e

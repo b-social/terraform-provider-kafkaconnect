@@ -8,9 +8,7 @@ jobs:
     - run:
         command: apk add --no-cache git openssh-client
     - checkout
-    - run: ./scripts/ci/common/install-bash.sh
-    - run: ./scripts/ci/common/install-build-tools.sh
-    - run: ./scripts/ci/common/install-ruby.sh
+    - run: ./scripts/ci/common/provision-for-test.sh
     - run: ./scripts/ci/steps/test.sh
   prerelease:
     working_directory: /go/src/github.com/b-social/terraform-provider-kafkaconnect
@@ -20,12 +18,7 @@ jobs:
     - run:
         command: apk add --no-cache git openssh-client
     - checkout
-    - run: ./scripts/ci/common/install-bash.sh
-    - run: ./scripts/ci/common/install-build-tools.sh
-    - run: ./scripts/ci/common/install-ruby.sh
-    - run: ./scripts/ci/common/install-dep.sh
-    - run: ./scripts/ci/common/install-goreleaser.sh
-    - run: ./scripts/ci/common/configure-git.sh
+    - run: ./scripts/ci/common/provision-for-release.sh
     - run: ./scripts/ci/steps/prerelease.sh
   release:
     working_directory: /go/src/github.com/b-social/terraform-provider-kafkaconnect
@@ -35,12 +28,7 @@ jobs:
     - run:
         command: apk add --no-cache git openssh-client
     - checkout
-    - run: ./scripts/ci/common/install-bash.sh
-    - run: ./scripts/ci/common/install-build-tools.sh
-    - run: ./scripts/ci/common/install-ruby.sh
-    - run: ./scripts/ci/common/install-dep.sh
-    - run: ./scripts/ci/common/install-goreleaser.sh
-    - run: ./scripts/ci/common/configure-git.sh
+    - run: ./scripts/ci/common/provision-for-release.sh
     - run: ./scripts/ci/steps/release.sh
 
 workflows:

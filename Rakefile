@@ -56,7 +56,7 @@ namespace :provider do
 
     desc 'Runs all acceptance tests'
     task :acceptance do
-      ENV['TF_ACC']='1'
+      ENV['TF_ACC'] = '1'
       sh "go test #{package_list} -v " +
              "-coverprofile #{coverage_profile} " +
              "-run ^#{acceptance_tests}$"
@@ -74,5 +74,9 @@ end
 
 desc 'Creates a release for the current version on Github'
 task :release do
+  github_config = YAML.load_file(
+      "config/secrets/ci/github.yml")
+
+  ENV['GITHUB_TOKEN'] = github_config['token']
   sh 'goreleaser'
 end
