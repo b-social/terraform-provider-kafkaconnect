@@ -23,6 +23,7 @@ jobs:
     - run: ./scripts/ci/common/install-bash.sh
     - run: ./scripts/ci/common/install-build-tools.sh
     - run: ./scripts/ci/common/install-ruby.sh
+    - run: ./scripts/ci/common/install-dep.sh
     - run: ./scripts/ci/common/install-goreleaser.sh
     - run: ./scripts/ci/common/configure-git.sh
     - run: ./scripts/ci/steps/prerelease.sh
@@ -37,6 +38,7 @@ jobs:
     - run: ./scripts/ci/common/install-bash.sh
     - run: ./scripts/ci/common/install-build-tools.sh
     - run: ./scripts/ci/common/install-ruby.sh
+    - run: ./scripts/ci/common/install-dep.sh
     - run: ./scripts/ci/common/install-goreleaser.sh
     - run: ./scripts/ci/common/configure-git.sh
     - run: ./scripts/ci/steps/release.sh
