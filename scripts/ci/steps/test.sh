@@ -4,6 +4,8 @@
 set -e
 set -o pipefail
 
+export TERM=xterm
+
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PROJECT_DIR="$( cd "$SCRIPT_DIR/../../.." && pwd )"
 
