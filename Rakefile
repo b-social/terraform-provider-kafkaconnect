@@ -71,3 +71,8 @@ namespace :version do
     repo.push('origin', 'master', tags: true)
   end
 end
+
+desc 'Creates a release for the current version on Github'
+task :release do
+  sh 'goreleaser'
+end
