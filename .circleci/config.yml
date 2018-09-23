@@ -5,6 +5,8 @@ jobs:
     docker:
     - image: golang:1.11-alpine
     steps:
+    - run:
+        command: apk add --no-cache git
     - checkout
     - run: ./scripts/ci/common/install-ruby.sh
     - run: ./scripts/ci/steps/test.sh
@@ -13,6 +15,8 @@ jobs:
     docker:
     - image: golang:1.11-alpine
     steps:
+    - run:
+        command: apk add --no-cache git
     - checkout
     - run: ./scripts/ci/common/install-ruby.sh
     - run: ./scripts/ci/common/configure-git.sh
@@ -22,6 +26,8 @@ jobs:
     docker:
     - image: golang:1.11-alpine
     steps:
+    - run:
+        command: apk add --no-cache git
     - checkout
     - run: ./scripts/ci/common/install-ruby.sh
     - run: ./scripts/ci/common/configure-git.sh
