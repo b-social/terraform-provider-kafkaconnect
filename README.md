@@ -57,7 +57,7 @@ Enter the provider directory and build the provider
 
 ```sh
 > cd $GOPATH/src/github.com/b-social/terraform-provider-kafkaconnect
-> make build
+> ./build provider:build
 ```
 
 Now copy the compiled binary to Terraform's plugins folder. If this is your 
@@ -111,7 +111,7 @@ Development
 -----------
 
 After checking out the repo, run `dep ensure` to install dependencies. Then, 
-run `make test` to run the tests. 
+run `./build provider:test:unit` to run the tests. 
 
 Contributing
 ------------

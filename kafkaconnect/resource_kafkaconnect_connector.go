@@ -182,8 +182,7 @@ func buildConnector(d *schema.ResourceData) *connect.Connector {
 
 		if keyConverterConfiguration, ok :=
 			d.GetOk("key_converter_configuration"); ok {
-			for key, val :=
-			range keyConverterConfiguration.(map[string]interface{}) {
+			for key, val := range keyConverterConfiguration.(map[string]interface{}) {
 				connectorConfig["key.converter."+key] = val.(string)
 			}
 		}
@@ -194,8 +193,7 @@ func buildConnector(d *schema.ResourceData) *connect.Connector {
 
 		if valueConverterConfiguration, ok :=
 			d.GetOk("value_converter_configuration"); ok {
-			for key, val :=
-			range valueConverterConfiguration.(map[string]interface{}) {
+			for key, val := range valueConverterConfiguration.(map[string]interface{}) {
 				connectorConfig["value.converter."+key] = val.(string)
 			}
 		}
