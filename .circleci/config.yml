@@ -9,6 +9,7 @@ jobs:
         command: apk add --no-cache git openssh-client
     - checkout
     - run: ./scripts/ci/common/install-bash.sh
+    - run: ./scripts/ci/common/install-build-tools.sh
     - run: ./scripts/ci/common/install-ruby.sh
     - run: ./scripts/ci/steps/test.sh
   prerelease:
@@ -20,6 +21,7 @@ jobs:
         command: apk add --no-cache git openssh-client
     - checkout
     - run: ./scripts/ci/common/install-bash.sh
+    - run: ./scripts/ci/common/install-build-tools.sh
     - run: ./scripts/ci/common/install-ruby.sh
     - run: ./scripts/ci/common/configure-git.sh
     - run: ./scripts/ci/steps/prerelease.sh
@@ -32,6 +34,7 @@ jobs:
         command: apk add --no-cache git openssh-client
     - checkout
     - run: ./scripts/ci/common/install-bash.sh
+    - run: ./scripts/ci/common/install-build-tools.sh
     - run: ./scripts/ci/common/install-ruby.sh
     - run: ./scripts/ci/common/configure-git.sh
     - run: ./scripts/ci/steps/release.sh
