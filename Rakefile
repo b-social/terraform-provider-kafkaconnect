@@ -1,4 +1,5 @@
 require 'rake'
+require 'yaml'
 require 'git'
 require 'semantic'
 
