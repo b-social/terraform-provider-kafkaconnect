@@ -18,14 +18,14 @@ Installation
 
 The recommended way to install *terraform-provider-kafkaconnect* is use the 
 binary distributions from the 
-[Releases](https://github.com/mcuadros/terraform-provider-helm/releases) page.
-The packages are available for Linux and macOS.
+[Releases](https://github.com/b-social/terraform-provider-kafkaconnect/releases)
+page. The packages are available for Linux and macOS.
 
 Download and uncompress the latest release for your OS. This example uses the 
 linux binary.
 
 ```sh
-> wget https://github.com/b-social/terraform-provider-kafkaconnect/releases/download/v0.1.0/terraform-provider-kafkaconnect_v0.1.0_linux_amd64.tar.gz
+> wget https://github.com/b-social/terraform-provider-kafkaconnect/releases/download/0.1.0-rc.5/terraform-provider-kafkaconnect_v0.1.0-rc.5_linux_amd64.tar.gz
 > tar -xvf terraform-provider-kafkaconnect*.tar.gz
 ```
 
