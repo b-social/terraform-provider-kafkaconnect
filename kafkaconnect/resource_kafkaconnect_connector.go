@@ -15,6 +15,7 @@ func newConnector() *schema.Resource {
 		Read:   readConnector,
 		Update: updateConnector,
 		Delete: deleteConnector,
+		Exists: checkIfConnectorExists,
 		Importer: &schema.ResourceImporter{
 			State: schema.ImportStatePassthrough,
 		},
@@ -168,6 +169,25 @@ func deleteConnector(data *schema.ResourceData, context interface{}) error {
 	}
 
 	return nil
+}
+
+func checkIfConnectorExists(
+	data *schema.ResourceData,
+	context interface{}) (bool, error) {
+	client := context.(*connect.Client)
+
+	_, _, err := client.GetConnectorStatus(data.Id())
+	if err != nil {
+		if apiError, ok := err.(connect.APIError); ok  {
+			if apiError.Code == 404 {
+				return false, nil
+			}
+		}
+
+		return false, err
+	}
+
+	return true, nil
 }
 
 func buildConnector(d *schema.ResourceData) *connect.Connector {
