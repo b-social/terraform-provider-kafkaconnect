@@ -1,4 +1,6 @@
 builds:
+  - ldflags:
+    - -s -w -X "main.version={{.Env.VERSION}}"
   - binary: terraform-provider-kafkaconnect
     env:
       - CGO_ENABLED=0

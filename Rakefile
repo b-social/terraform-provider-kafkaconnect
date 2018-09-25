@@ -77,7 +77,10 @@ desc 'Creates a release for the current version on Github'
 task :release do
   github_config = YAML.load_file(
       "config/secrets/ci/github.yml")
+  version = latest_tag
 
   ENV['GITHUB_TOKEN'] = github_config['token']
+  ENV['VERSION'] = version
+
   sh 'goreleaser'
 end
