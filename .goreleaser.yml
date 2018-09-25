@@ -1,6 +1,4 @@
 builds:
-  - ldflags:
-    - -s -w -X "main.version={{.Env.VERSION}}"
   - binary: terraform-provider-kafkaconnect
     env:
       - CGO_ENABLED=0
@@ -10,6 +8,8 @@ builds:
       - windows
     goarch:
       - amd64
+    ldflags:
+      - -s -w -X "main.version={{.Env.VERSION}}"
 archive:
   name_template: "{{ .ProjectName }}_v{{ .Version }}_{{ .Os }}_{{ .Arch }}"
   format: tar.gz

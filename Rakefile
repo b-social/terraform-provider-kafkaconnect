@@ -82,5 +82,7 @@ task :release do
   ENV['GITHUB_TOKEN'] = github_config['token']
   ENV['VERSION'] = version.to_s
 
+  puts version
+
   sh 'goreleaser'
 end
