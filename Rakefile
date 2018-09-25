@@ -80,7 +80,7 @@ task :release do
   version = latest_tag
 
   ENV['GITHUB_TOKEN'] = github_config['token']
-  ENV['VERSION'] = version
+  ENV['VERSION'] = version.to_s
 
   sh 'goreleaser'
 end
