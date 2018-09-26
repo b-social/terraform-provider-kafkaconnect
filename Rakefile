@@ -78,7 +78,7 @@ namespace :release do
   task :prepare, [:type] do |_, args|
     unless args.type == 'rc'
       next_tag = latest_tag.send("#{args.type}")
-      File.open('LATEST_RELEASE.md') do |f|
+      File.open('LATEST_RELEASE.md', 'w') do |f|
         f.write(next_tag)
       end
       repo.commit_all("Preparing release #{next_tag} [ci skip]")
