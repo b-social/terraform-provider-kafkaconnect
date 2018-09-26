@@ -14,4 +14,7 @@ cd "$PROJECT_DIR"
 git crypt unlock
 
 ./build version:bump[rc]
-./build release
+
+git push origin master --tags
+
+./build release:perform

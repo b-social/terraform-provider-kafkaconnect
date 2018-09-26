@@ -14,5 +14,9 @@ cd "$PROJECT_DIR"
 git crypt unlock
 git pull
 
+./build release:prepare[minor]
 ./build version:bump[minor]
-./build release
+
+git push origin master --tags
+
+./build release:perform

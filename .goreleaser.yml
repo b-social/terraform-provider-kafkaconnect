@@ -8,8 +8,6 @@ builds:
       - windows
     goarch:
       - amd64
-    ldflags:
-      - -s -w -X "main.version={{.Env.VERSION}}"
 archive:
   name_template: "{{ .ProjectName }}_v{{ .Version }}_{{ .Os }}_{{ .Arch }}"
   format: tar.gz

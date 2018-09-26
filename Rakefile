@@ -66,23 +66,32 @@ namespace :provider do
 end
 
 namespace :version do
+  desc 'Bumps the version component of the provided type'
   task :bump, [:type] do |_, args|
     next_tag = latest_tag.send("#{args.type}!")
     repo.add_tag(next_tag.to_s)
-    repo.push('origin', 'master', tags: true)
   end
 end
 
-desc 'Creates a release for the current version on Github'
-task :release do
-  github_config = YAML.load_file(
-      "config/secrets/ci/github.yml")
-  version = latest_tag
+namespace :release do
+  desc 'Prepares for a release of the provided type'
+  task :prepare, [:type] do |_, args|
+    unless args.type == 'rc'
+      next_tag = latest_tag.send("#{args.type}")
+      File.open('LATEST_RELEASE.md') do |f|
+        f.write(next_tag)
+      end
+      repo.commit_all("Preparing release #{next_tag} [ci skip]")
+    end
+  end
 
-  ENV['GITHUB_TOKEN'] = github_config['token']
-  ENV['VERSION'] = version.to_s
+  desc 'Creates a release for the current version on Github'
+  task :perform do
+    github_config = YAML.load_file(
+        "config/secrets/ci/github.yml")
 
-  puts version
+    ENV['GITHUB_TOKEN'] = github_config['token']
 
-  sh 'goreleaser'
+    sh 'goreleaser'
+  end
 end
