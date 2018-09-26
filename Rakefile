@@ -81,7 +81,8 @@ namespace :release do
       File.open('LATEST_RELEASE.md', 'w') do |f|
         f.write(next_tag)
       end
-      repo.commit_all("Preparing release #{next_tag} [ci skip]")
+      repo.add(:all=>true)
+      repo.commit("Preparing release #{next_tag} [ci skip]")
     end
   end
 
