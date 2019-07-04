@@ -93,6 +93,6 @@ namespace :release do
 
     ENV['GITHUB_TOKEN'] = github_config['token']
 
-    sh 'goreleaser'
+    sh 'curl -sL http://git.io/goreleaser | bash'
   end
 end
