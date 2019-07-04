@@ -54,7 +54,7 @@ func newConnector() *schema.Resource {
 			"configuration": {
 				Type:     schema.TypeMap,
 				Optional: true,
-				Elem:      &schema.Schema{Type: schema.TypeString},
+				Elem:     schema.TypeString,
 			},
 		},
 	}
