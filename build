@@ -68,4 +68,6 @@ echo
 echo ${bold}${green}">>> Running command: [ build $COMMAND ]"${reset}
 echo
 
+echo "Ruby version"
+ruby -v
 run_rake $COMMAND
