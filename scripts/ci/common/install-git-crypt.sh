@@ -19,9 +19,11 @@ apk --update add \
     openssl-dev
 
 for key in 0xEF5D84C1838F2EB6D8968C0410378EFC2080080C; do
+    gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys "$key" ||
     gpg --keyserver pgp.mit.edu --recv-keys "$key" ||
     gpg --keyserver keyserver.pgp.com --recv-keys "$key" ||
-    gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key";
+    gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key" ||
+    gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys "$key";
 done
 
 cd /var/tmp
