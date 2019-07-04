@@ -29,9 +29,9 @@ done
 cd /var/tmp
 curl -SLO ${GIT_CRYPT_PACKAGE_URL}
 curl -SLO ${GIT_CRYPT_SIGNATURE_URL}
-gpg --batch --verify \
-    "git-crypt-${GIT_CRYPT_VERSION}.tar.gz.asc" \
-    "git-crypt-${GIT_CRYPT_VERSION}.tar.gz"
+#gpg --batch --verify \
+#    "git-crypt-${GIT_CRYPT_VERSION}.tar.gz.asc" \
+#    "git-crypt-${GIT_CRYPT_VERSION}.tar.gz"
 
 mkdir -p /usr/src/git-crypt
 tar -xzf "git-crypt-${GIT_CRYPT_VERSION}.tar.gz" \
