@@ -24,6 +24,7 @@ func newConnector() *schema.Resource {
 			"name": {
 				Type:     schema.TypeString,
 				Required: true,
+				ForceNew: true,
 			},
 			"class": {
 				Type:     schema.TypeString,
