@@ -1,23 +1,24 @@
 package kafkaconnect
 
 import (
+	"context"
 	"regexp"
 	"strconv"
 	"strings"
 
 	"github.com/go-kafka/connect"
-	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 func newConnector() *schema.Resource {
 	return &schema.Resource{
-		Create: createConnector,
-		Read:   readConnector,
-		Update: updateConnector,
-		Delete: deleteConnector,
-		Exists: checkIfConnectorExists,
+		CreateContext: createConnector,
+		ReadContext:   readConnector,
+		UpdateContext: updateConnector,
+		DeleteContext: deleteConnector,
 		Importer: &schema.ResourceImporter{
-			State: schema.ImportStatePassthrough,
+			StateContext: schema.ImportStatePassthroughContext,
 		},
 
 		Schema: map[string]*schema.Schema{
@@ -61,24 +62,39 @@ func newConnector() *schema.Resource {
 	}
 }
 
-func createConnector(data *schema.ResourceData, context interface{}) error {
+func createConnector(ctx context.Context, data *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	connector := buildConnector(data)
-	client := context.(*connect.Client)
+	client := meta.(*connect.Client)
 
 	if _, err := client.CreateConnector(connector); err != nil {
-		return err
+		return diag.FromErr(err)
 	}
 
 	data.SetId(connector.Name)
 
-	return readConnector(data, context)
+	return readConnector(ctx, data, meta)
 }
 
-func readConnector(data *schema.ResourceData, context interface{}) error {
-	client := context.(*connect.Client)
+func readConnector(ctx context.Context, data *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	var diags diag.Diagnostics
+
+	exists, err := checkIfConnectorExists(data, meta)
+	if err != nil {
+		return diag.FromErr(err)
+	}
+	if !exists {
+		diags = append(diags, diag.Diagnostic{
+			Severity: diag.Error,
+			Summary:  "Connector exists",
+			Detail:   "Connector with id already exists",
+		})
+		return diags
+	}
+
+	client := meta.(*connect.Client)
 	connector, _, err := client.GetConnector(data.Id())
 	if err != nil {
-		return err
+		return diag.FromErr(err)
 	}
 
 	data.Set("name", connector.Name)
@@ -86,7 +102,7 @@ func readConnector(data *schema.ResourceData, context interface{}) error {
 
 	maximumTasks, err := strconv.Atoi(connector.Config["tasks.max"])
 	if err != nil {
-		return err
+		return diag.FromErr(err)
 	}
 	data.Set("maximum_tasks", maximumTasks)
 
@@ -146,40 +162,42 @@ func readConnector(data *schema.ResourceData, context interface{}) error {
 		data.Set("configuration", configuration)
 	}
 
-	return nil
+	return diags
 }
 
-func updateConnector(data *schema.ResourceData, context interface{}) error {
+func updateConnector(ctx context.Context, data *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	connector := buildConnector(data)
-	client := context.(*connect.Client)
+	client := meta.(*connect.Client)
 
 	_, _, err := client.UpdateConnectorConfig(data.Id(), connector.Config)
 	if err != nil {
-		return err
+		return diag.FromErr(err)
 	}
 
-	return readConnector(data, context)
+	return readConnector(ctx, data, meta)
 }
 
-func deleteConnector(data *schema.ResourceData, context interface{}) error {
-	client := context.(*connect.Client)
+func deleteConnector(ctx context.Context, data *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	client := meta.(*connect.Client)
+
+	var diags diag.Diagnostics
 
 	_, err := client.DeleteConnector(data.Id())
 	if err != nil {
-		return err
+		return diag.FromErr(err)
 	}
 
-	return nil
+	return diags
 }
 
 func checkIfConnectorExists(
 	data *schema.ResourceData,
-	context interface{}) (bool, error) {
-	client := context.(*connect.Client)
+	meta interface{}) (bool, error) {
+	client := meta.(*connect.Client)
 
 	_, _, err := client.GetConnectorStatus(data.Id())
 	if err != nil {
-		if apiError, ok := err.(connect.APIError); ok  {
+		if apiError, ok := err.(connect.APIError); ok {
 			if apiError.Code == 404 {
 				return false, nil
 			}
