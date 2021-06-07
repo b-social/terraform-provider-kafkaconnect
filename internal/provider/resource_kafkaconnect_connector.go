@@ -1,4 +1,4 @@
-package kafkaconnect
+package provider
 
 import (
 	"context"

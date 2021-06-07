@@ -5,8 +5,8 @@ import (
 	"flag"
 	"log"
 
+	"github.com/b-social/terraform-provider-kafkaconnect/internal/provider"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/plugin"
-	"github.com/b-social/terraform-provider-kafkaconnect/kafkaconnect"
 )
 
 // Run "go generate" to format example terraform files and generate the docs for the registry/website
