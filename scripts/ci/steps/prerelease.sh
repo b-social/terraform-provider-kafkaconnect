@@ -20,5 +20,4 @@ git push origin master --tags
 fingerprint=$(gpg --with-colons --list-keys | awk -F: '/^pub/ { print $5 }')
 export GPG_FINGERPRINT=$fingerprint
 
-
 ./build release:perform
