@@ -36,7 +36,6 @@ jobs:
         env:
           # These secrets will need to be configured for the repository:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
-      - run: dep ensure
       -
         name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
