@@ -17,6 +17,8 @@ git crypt unlock
 
 git push origin master --tags
 
-export GPG_FINGERPRINT=$(gpg --with-colons --list-keys | awk -F: '/^pub/ { print $5 }')
+fingerprint=$(gpg --with-colons --list-keys | awk -F: '/^pub/ { print $5 }')
+export GPG_FINGERPRINT=$fingerprint
+
 
 ./build release:perform
