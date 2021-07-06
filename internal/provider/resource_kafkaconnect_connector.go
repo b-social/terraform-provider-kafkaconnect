@@ -85,8 +85,8 @@ func readConnector(ctx context.Context, data *schema.ResourceData, meta interfac
 	if !exists {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
-			Summary:  "Connector exists",
-			Detail:   "Connector with id already exists",
+			Summary:  "Connector does not exist",
+			Detail:   "Connector does not exist",
 		})
 		return diags
 	}
