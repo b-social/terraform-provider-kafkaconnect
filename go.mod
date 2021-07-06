@@ -8,4 +8,5 @@ require (
 	github.com/mattn/go-colorable v0.1.7 // indirect
 	github.com/onsi/ginkgo v1.16.4 // indirect
 	github.com/onsi/gomega v1.13.0 // indirect
+	gopkg.in/matryer/try.v1 v1.0.0-20150601225556-312d2599e12e // indirect
 )

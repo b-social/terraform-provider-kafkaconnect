@@ -5,10 +5,13 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/go-kafka/connect"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	"gopkg.in/matryer/try.v1"
 )
 
 func newConnector() *schema.Resource {
@@ -195,15 +198,29 @@ func checkIfConnectorExists(
 	meta interface{}) (bool, error) {
 	client := meta.(*connect.Client)
 
-	_, _, err := client.GetConnectorStatus(data.Id())
-	if err != nil {
-		if apiError, ok := err.(connect.APIError); ok {
-			if apiError.Code == 404 {
-				return false, nil
+	retryError := try.Do(func(attempt int) (bool, error) {
+		_, _, err := client.GetConnectorStatus(data.Id())
+		if err != nil {
+			if apiError, ok := err.(connect.APIError); ok {
+				if apiError.Code == 404 {
+					if attempt < 30 {
+						time.Sleep(1 * time.Second)
+						return true, err
+					}
+					return false, err
+				}
 			}
+			if attempt < 30 {
+				time.Sleep(1 * time.Second)
+				return true, err
+			}
+			return false, err
 		}
+		return false, nil
+	})
 
-		return false, err
+	if retryError != nil {
+		return false, retryError
 	}
 
 	return true, nil
