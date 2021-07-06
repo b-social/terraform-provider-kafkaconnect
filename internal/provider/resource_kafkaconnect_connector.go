@@ -198,36 +198,31 @@ func checkIfConnectorExists(
 	meta interface{}) (bool, error) {
 	client := meta.(*connect.Client)
 
-	var attempts = 60
-	var delay = 5 * time.Second
-	var exists bool
-	retryError := try.Do(func(attempt int) (bool, error) {
+	var delay = 30 * time.Second
+
+	err := try.Do(func(attempt int) (bool, error) {
 		_, _, err := client.GetConnectorStatus(data.Id())
 		if err != nil {
 			if apiError, ok := err.(connect.APIError); ok {
 				if apiError.Code == 404 {
-					if attempt < attempts {
-						time.Sleep(delay)
-						return true, nil
-					}
-					return false, nil
+					time.Sleep(delay)
+					return true, nil
 				}
 			}
-			if attempt < attempts {
-				time.Sleep(delay)
-				return true, err
-			}
-			return false, err
+			time.Sleep(delay)
+			return true, err
 		}
-		exists = true
 		return false, nil
 	})
 
-	if retryError != nil {
-		return false, retryError
+	if err != nil {
+		if try.IsMaxRetries(err) {
+			return false, nil
+		}
+		return false, err
 	}
 
-	return exists, nil
+	return true, nil
 }
 
 func buildConnector(d *schema.ResourceData) *connect.Connector {
